@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mizcausevic-dev/grid-decision-record-audit-stream/blob/main/schema/grid-decision-event.schema.json",
+  "title": "Grid Decision Record Audit Event",
+  "description": "Hash-chained append-only ledger event describing which AI tool produced which grid-operations decision — load forecasting, outage detection / restoration, demand response, market-clearing recommendation, transmission switching, pipeline operations — when, under which NERC CIP standard + FERC rule + TSA Security Directive + state PUC tariff + EPA Section 114 information request basis, under which buyer-published Decision Card. Bridges control-room SCADA/EMS semantics + bulk-electric-system + pipeline operations to the Kinetic Gain Protocol Suite audit-stream spine. EVERY event carries explicit bes_cyber_system_categorization + ot_it_boundary — the EnergyTech vertical's design innovation versus sibling-vertical audit-streams.",
+  "type": "object",
+  "required": ["event_id", "timestamp", "kind", "source", "asset_ref", "resource", "action", "outcome", "agent", "regulatory_basis", "decision_card_ref", "prev_hash", "hash"],
+  "additionalProperties": false,
+  "properties": {
+    "event_id":   {"type": "string", "minLength": 1, "description": "UUID v7 recommended"},
+    "timestamp":  {"type": "string", "format": "date-time"},
+    "kind": {
+      "type": "string",
+      "enum": [
+        "energytech.grid.load-forecast-produced",
+        "energytech.grid.outage-detected",
+        "energytech.grid.outage-restoration-prioritized",
+        "energytech.grid.load-shed-recommended",
+        "energytech.grid.load-shed-executed",
+        "energytech.grid.demand-response-dispatched",
+        "energytech.grid.market-clearing-recommended",
+        "energytech.grid.transmission-switching-recommended",
+        "energytech.grid.transmission-switching-executed",
+        "energytech.grid.protective-relay-action-recommended",
+        "energytech.pipeline.operations-recommendation-produced",
+        "energytech.pipeline.scada-anomaly-detected",
+        "energytech.cybersecurity.bes-cyber-system-anomaly-detected",
+        "energytech.cybersecurity.cip-008-reportable-incident-flagged",
+        "energytech.tariff.rate-class-recommendation-produced",
+        "energytech.ev-charging.deployment-recommendation-produced",
+        "energytech.deletion-requested"
+      ]
+    },
+    "source":     {"type": "string", "minLength": 1, "description": "The system that emitted the event (e.g. 'cgo-ems-prod', 'vendore-gridsense-6.x')"},
+    "asset_ref": {
+      "type": "object",
+      "required": ["scheme", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "scheme": {"type": "string", "enum": ["bus-id-tokenized", "substation-id-tokenized", "generator-id-tokenized", "transmission-line-id-tokenized", "pipeline-segment-id-tokenized", "distribution-feeder-id-tokenized", "control-area-id-tokenized", "balancing-authority-id-tokenized", "load-zone-id-tokenized"]},
+        "value":  {"type": "string", "minLength": 1, "description": "Tokenized asset identifier — raw NERC GADS / OASIS / EIA-861 / pipeline-system-ID MUST NOT appear"}
+      }
+    },
+    "resource": {
+      "type": "object",
+      "required": ["type", "bes_cyber_system_categorization", "ot_it_boundary"],
+      "additionalProperties": false,
+      "properties": {
+        "type":           {"type": "string", "enum": ["scada-data-point", "ems-state-estimator-output", "load-forecast-record", "outage-management-record", "market-bid", "market-clearing-record", "ami-meter-reading", "demand-response-event", "protective-relay-setting", "transmission-switching-order", "pipeline-pressure-reading", "pipeline-control-command", "rate-class-design-record", "ev-charging-site-record", "cyber-security-event-log", "physical-security-event-log"]},
+        "id_tokenized":   {"type": "string", "minLength": 1, "description": "Tokenized resource ID"},
+        "fields_accessed":{"type": "array", "items": {"type": "string"}, "description": "Logical field names accessed"},
+        "bes_cyber_system_categorization": {
+          "type": "string",
+          "enum": ["HIGH-IMPACT", "MEDIUM-IMPACT", "LOW-IMPACT", "NONE-APPLICABLE", "PHYSICAL-SECURITY-PERIMETER-ONLY"],
+          "description": "EnergyTech-unique. CIP-002-5.1a categorization. HIGH-impact requires human-operator-in-loop on any AI-recommended action; MEDIUM requires within-control-area-only AI access; LOW requires logging. NONE-APPLICABLE for non-BES assets (e.g. rate-class design, EV charging)."
+        },
+        "ot_it_boundary": {
+          "type": "string",
+          "enum": ["OT", "IT", "OT-IT-CROSSING"],
+          "description": "EnergyTech-unique. Which side of the air gap the AI tool was operating on. OT = operational technology (SCADA/EMS/protective relays); IT = analytics/forecasting/reporting; OT-IT-CROSSING = data flowed across the boundary, REQUIRES separately-attested OT-IT-data-diode controls."
+        }
+      }
+    },
+    "action": {"type": "string", "enum": ["read", "search", "recommend", "execute", "stamp", "delete"]},
+    "outcome": {
+      "type": "object",
+      "required": ["status"],
+      "additionalProperties": false,
+      "properties": {
+        "status":           {"type": "string", "enum": ["success", "minor-failure", "serious-failure", "major-failure", "blocked-by-bes-category", "blocked-by-ot-it-boundary", "blocked-by-human-operator-veto"]},
+        "recommendation":   {"type": "string", "enum": ["advisory-only", "operator-confirmation-required", "auto-execute-within-envelope", "no-recommendation", "halt-and-escalate"], "description": "What the AI tool recommended. 'auto-execute-within-envelope' is permitted only for LOW-impact + IT-only events; HIGH-impact never permits auto-execute"}
+      }
+    },
+    "agent": {
+      "type": "object",
+      "required": ["ai_tool_card_url", "ai_decision_card_url"],
+      "additionalProperties": false,
+      "properties": {
+        "ai_tool_card_url":          {"type": "string", "format": "uri"},
+        "ai_decision_card_url":      {"type": "string", "format": "uri"},
+        "human_operator_session_id_tokenized": {"type": "string", "description": "Tokenized control-room operator session id; REQUIRED on HIGH-impact + OT events (invariant #1)"},
+        "human_operator_nerc_certification_id_tokenized": {"type": "string", "description": "Tokenized NERC System Operator certification id; REQUIRED on transmission-switching events"}
+      }
+    },
+    "regulatory_basis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "nerc-cip-002-bes-categorization",
+          "nerc-cip-005-electronic-security-perimeter",
+          "nerc-cip-007-system-security-management",
+          "nerc-cip-008-incident-reporting",
+          "nerc-cip-011-information-protection",
+          "nerc-cip-013-supply-chain-risk-management",
+          "nerc-cip-014-physical-security",
+          "nerc-operating-procedures",
+          "ferc-order-2222-aggregated-der",
+          "ferc-rule-715-real-time-info",
+          "ferc-form-715",
+          "tsa-sd-2021-02-pipeline-cybersecurity",
+          "tsa-sd-2021-02c-revised-pipeline",
+          "doe-eo-14028-implementation",
+          "epa-clean-air-act-section-114",
+          "state-puc-tariff-authority",
+          "state-puc-prudency-review",
+          "iso-rto-tariff-and-business-practice-manual",
+          "engagement-letter-or-msa-binding"
+        ]
+      }
+    },
+    "cip_008_incident_report_ref": {
+      "type": "object",
+      "description": "REQUIRED on any kind=energytech.cybersecurity.cip-008-reportable-incident-flagged event per invariant #3.",
+      "additionalProperties": false,
+      "required": ["report_id", "filed_at", "e_isac_url"],
+      "properties": {
+        "report_id":   {"type": "string"},
+        "filed_at":    {"type": "string", "format": "date-time"},
+        "e_isac_url":  {"type": "string", "format": "uri"}
+      }
+    },
+    "tsa_pipeline_disclosure_ref": {
+      "type": "object",
+      "description": "REQUIRED on any pipeline-kind event per invariant #2.",
+      "additionalProperties": false,
+      "required": ["filed_at", "tsa_form_id"],
+      "properties": {
+        "filed_at":     {"type": "string", "format": "date-time"},
+        "tsa_form_id":  {"type": "string"}
+      }
+    },
+    "redaction_applied": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "action"],
+        "additionalProperties": false,
+        "properties": {
+          "field":  {"type": "string"},
+          "action": {"type": "string", "enum": ["tokenize", "mask", "hash", "drop"]}
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alg", "value", "key_uri"],
+      "properties": {
+        "alg":     {"type": "string", "enum": ["ed25519"]},
+        "value":   {"type": "string", "pattern": "^[A-Za-z0-9+/=_-]+$"},
+        "key_uri": {"type": "string", "format": "uri"}
+      }
+    },
+    "decision_card_ref": {"type": "string", "format": "uri"},
+    "prev_hash":         {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hash":              {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

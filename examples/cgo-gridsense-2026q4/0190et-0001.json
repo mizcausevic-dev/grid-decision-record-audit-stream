@@ -1,0 +1,38 @@
+{
+  "event_id": "0190et-0001",
+  "timestamp": "2026-10-15T08:00:00Z",
+  "kind": "energytech.grid.load-forecast-produced",
+  "source": "cgo-forecasting-prod",
+  "asset_ref": {
+    "scheme": "control-area-id-tokenized",
+    "value": "tok_ca_CGO_north"
+  },
+  "resource": {
+    "type": "load-forecast-record",
+    "id_tokenized": "tok_res_lf_a1",
+    "bes_cyber_system_categorization": "NONE-APPLICABLE",
+    "ot_it_boundary": "IT"
+  },
+  "action": "recommend",
+  "outcome": {
+    "status": "success",
+    "recommendation": "advisory-only"
+  },
+  "agent": {
+    "ai_tool_card_url": "https://vendore-gridsense.example/.well-known/ai-tool-cards/gridsense-6.x.json",
+    "ai_decision_card_url": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json"
+  },
+  "regulatory_basis": [
+    "ferc-rule-715-real-time-info",
+    "iso-rto-tariff-and-business-practice-manual"
+  ],
+  "decision_card_ref": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+  "redaction_applied": [
+    {
+      "field": "control-area-name",
+      "action": "tokenize"
+    }
+  ],
+  "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "hash": "b8090ab6d43d4f79d23cb2aa850680880e197e7363246c41e6dad12e1180dc9a"
+}

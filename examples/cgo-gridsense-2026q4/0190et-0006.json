@@ -1,0 +1,37 @@
+{
+  "event_id": "0190et-0006",
+  "timestamp": "2026-10-15T17:18:00Z",
+  "kind": "energytech.pipeline.scada-anomaly-detected",
+  "source": "cgo-pipeline-scada-prod",
+  "asset_ref": {
+    "scheme": "pipeline-segment-id-tokenized",
+    "value": "tok_pipe_CGO_seg_22"
+  },
+  "resource": {
+    "type": "pipeline-pressure-reading",
+    "id_tokenized": "tok_res_pp_f6",
+    "bes_cyber_system_categorization": "NONE-APPLICABLE",
+    "ot_it_boundary": "OT"
+  },
+  "action": "stamp",
+  "outcome": {
+    "status": "success",
+    "recommendation": "halt-and-escalate"
+  },
+  "agent": {
+    "ai_tool_card_url": "https://vendore-gridsense.example/.well-known/ai-tool-cards/gridsense-6.x.json",
+    "ai_decision_card_url": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+    "human_operator_session_id_tokenized": "tok_op_session_9c4"
+  },
+  "regulatory_basis": [
+    "tsa-sd-2021-02c-revised-pipeline",
+    "doe-eo-14028-implementation"
+  ],
+  "tsa_pipeline_disclosure_ref": {
+    "filed_at": "2026-10-15T17:42:00Z",
+    "tsa_form_id": "TSA-PIPE-2026-1140"
+  },
+  "decision_card_ref": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+  "prev_hash": "14eb80f41339b6e7e084f577996ac9094a1017fc2ec20b33453d7813669affbd",
+  "hash": "ac3c880be17e3daea9ad8d7ed153512d5745c49f9d924e1de5a3e62ab935643e"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "grid-decision-record-audit-stream",
+  "version": "0.1.0",
+  "description": "EnergyTech audit-stream Operator: per-grid-operations AI-decision events hash-chained for NERC CIP + FERC + TSA Security Directives + state PUC + DOE EO 14028 + EPA Section 114 evidence. Every event carries explicit bes_cyber_system_categorization + ot_it_boundary — the EnergyTech vertical's design innovation versus sibling-vertical audit-streams.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:examples": "node src/build-examples.mjs",
+    "verify": "node src/verify.mjs examples/cgo-gridsense-2026q4-stream.ndjson",
+    "test": "npm run build:examples && npm run verify"
+  },
+  "dependencies": {
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

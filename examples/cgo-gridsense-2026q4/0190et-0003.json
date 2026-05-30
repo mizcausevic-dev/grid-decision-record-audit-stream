@@ -1,0 +1,34 @@
+{
+  "event_id": "0190et-0003",
+  "timestamp": "2026-10-15T14:25:00Z",
+  "kind": "energytech.grid.outage-restoration-prioritized",
+  "source": "cgo-oms-prod",
+  "asset_ref": {
+    "scheme": "transmission-line-id-tokenized",
+    "value": "tok_tx_CGO_line_138kv_north"
+  },
+  "resource": {
+    "type": "outage-management-record",
+    "id_tokenized": "tok_res_oms_c3",
+    "bes_cyber_system_categorization": "HIGH-IMPACT",
+    "ot_it_boundary": "OT"
+  },
+  "action": "recommend",
+  "outcome": {
+    "status": "success",
+    "recommendation": "operator-confirmation-required"
+  },
+  "agent": {
+    "ai_tool_card_url": "https://vendore-gridsense.example/.well-known/ai-tool-cards/gridsense-6.x.json",
+    "ai_decision_card_url": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+    "human_operator_session_id_tokenized": "tok_op_session_7e2",
+    "human_operator_nerc_certification_id_tokenized": "tok_nerc_cert_9a01"
+  },
+  "regulatory_basis": [
+    "nerc-cip-002-bes-categorization",
+    "nerc-operating-procedures"
+  ],
+  "decision_card_ref": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+  "prev_hash": "a424ac338e926224275b3270fbc07db1539fa95a2ff34e7889adadc4e627ea9c",
+  "hash": "a06646564947b2892d1b91a7568c4bf87baccf0f32fa9ad1c53d3c1d93e07578"
+}

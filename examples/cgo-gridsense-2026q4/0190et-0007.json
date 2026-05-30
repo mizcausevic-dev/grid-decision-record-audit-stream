@@ -1,0 +1,32 @@
+{
+  "event_id": "0190et-0007",
+  "timestamp": "2026-10-16T09:00:00Z",
+  "kind": "energytech.tariff.rate-class-recommendation-produced",
+  "source": "cgo-tariff-analytics-prod",
+  "asset_ref": {
+    "scheme": "load-zone-id-tokenized",
+    "value": "tok_lz_CGO_zone_north"
+  },
+  "resource": {
+    "type": "rate-class-design-record",
+    "id_tokenized": "tok_res_rate_g7",
+    "bes_cyber_system_categorization": "NONE-APPLICABLE",
+    "ot_it_boundary": "IT"
+  },
+  "action": "recommend",
+  "outcome": {
+    "status": "success",
+    "recommendation": "advisory-only"
+  },
+  "agent": {
+    "ai_tool_card_url": "https://vendore-gridsense.example/.well-known/ai-tool-cards/gridsense-6.x.json",
+    "ai_decision_card_url": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json"
+  },
+  "regulatory_basis": [
+    "state-puc-tariff-authority",
+    "state-puc-prudency-review"
+  ],
+  "decision_card_ref": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+  "prev_hash": "ac3c880be17e3daea9ad8d7ed153512d5745c49f9d924e1de5a3e62ab935643e",
+  "hash": "074a09a58bc0cd923d567e02ad9befd62c9d08d0ac08c6558a64ed0fdb07cacc"
+}

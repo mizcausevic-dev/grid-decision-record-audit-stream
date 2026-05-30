@@ -1,0 +1,33 @@
+{
+  "event_id": "0190et-0002",
+  "timestamp": "2026-10-15T14:23:00Z",
+  "kind": "energytech.grid.outage-detected",
+  "source": "cgo-ems-prod",
+  "asset_ref": {
+    "scheme": "substation-id-tokenized",
+    "value": "tok_sub_CGO_sub_47"
+  },
+  "resource": {
+    "type": "ems-state-estimator-output",
+    "id_tokenized": "tok_res_ems_b2",
+    "bes_cyber_system_categorization": "MEDIUM-IMPACT",
+    "ot_it_boundary": "OT"
+  },
+  "action": "recommend",
+  "outcome": {
+    "status": "success",
+    "recommendation": "operator-confirmation-required"
+  },
+  "agent": {
+    "ai_tool_card_url": "https://vendore-gridsense.example/.well-known/ai-tool-cards/gridsense-6.x.json",
+    "ai_decision_card_url": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+    "human_operator_session_id_tokenized": "tok_op_session_7e2"
+  },
+  "regulatory_basis": [
+    "nerc-cip-005-electronic-security-perimeter",
+    "nerc-operating-procedures"
+  ],
+  "decision_card_ref": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+  "prev_hash": "b8090ab6d43d4f79d23cb2aa850680880e197e7363246c41e6dad12e1180dc9a",
+  "hash": "a424ac338e926224275b3270fbc07db1539fa95a2ff34e7889adadc4e627ea9c"
+}

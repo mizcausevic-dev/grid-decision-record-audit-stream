@@ -1,0 +1,38 @@
+{
+  "event_id": "0190et-0005",
+  "timestamp": "2026-10-15T15:02:00Z",
+  "kind": "energytech.cybersecurity.cip-008-reportable-incident-flagged",
+  "source": "cgo-soc-prod",
+  "asset_ref": {
+    "scheme": "substation-id-tokenized",
+    "value": "tok_sub_CGO_sub_47"
+  },
+  "resource": {
+    "type": "cyber-security-event-log",
+    "id_tokenized": "tok_res_sec_e5",
+    "bes_cyber_system_categorization": "MEDIUM-IMPACT",
+    "ot_it_boundary": "OT-IT-CROSSING"
+  },
+  "action": "stamp",
+  "outcome": {
+    "status": "success",
+    "recommendation": "halt-and-escalate"
+  },
+  "agent": {
+    "ai_tool_card_url": "https://vendore-gridsense.example/.well-known/ai-tool-cards/gridsense-6.x.json",
+    "ai_decision_card_url": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+    "human_operator_session_id_tokenized": "tok_op_session_7e2"
+  },
+  "regulatory_basis": [
+    "nerc-cip-008-incident-reporting",
+    "nerc-cip-005-electronic-security-perimeter"
+  ],
+  "cip_008_incident_report_ref": {
+    "report_id": "CGO-CIP-008-2026-0023",
+    "filed_at": "2026-10-15T15:55:00Z",
+    "e_isac_url": "https://e-isac.example/reports/CGO-CIP-008-2026-0023"
+  },
+  "decision_card_ref": "https://cgo.example/.well-known/decisions/CGO-DEC-2026-GRID-0117.json",
+  "prev_hash": "0b1ec0b2962ad21ecbf2927363219be2a56f3b1f4341112a050916b30aeefe88",
+  "hash": "14eb80f41339b6e7e084f577996ac9094a1017fc2ec20b33453d7813669affbd"
+}
